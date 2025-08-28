@@ -10,7 +10,7 @@ const SignupComponent = () => {
       <div className="mx-auto mt-2">
         <p>
           Already have an account?{" "}
-          <a className="underline cursor-pointer">Sign in</a>
+          <a className="underline cursor-pointer" href="/login">Sign in</a>
         </p>
       </div>
 

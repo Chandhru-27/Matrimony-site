@@ -11,7 +11,7 @@ const LoginComponent = () => {
       <div className="mx-auto mt-5">
         <p>
           Don't have an account?{" "}
-          <a className="underline cursor-pointer">Sign up</a>
+          <a className="underline cursor-pointer" href="/signup">Sign up</a>
         </p>
       </div>
 
