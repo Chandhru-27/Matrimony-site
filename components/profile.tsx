@@ -1,28 +1,46 @@
 "use client";
 import React, { useState, useEffect } from "react";
 
-const STEPS = 3;
+const STEPS = 2;
 
 const ProfileComponent = () => {
   const [currentStep, setCurrentStep] = useState(1);
 
   const [formData, setFormData] = useState({
     gender: "",
-    ms: "",
+    maritalStatus: "",
     profession: "",
     education: "",
-    hobby: "",
+    address: "",
     bio: "",
+    community: "",
+    caste: "",
+    subCaste: "",
+    zodiacSign: "",
   });
 
-  const totalFields = Object.keys(formData).length;
   const [progress, setProgress] = useState(0);
 
   useEffect(() => {
-    const filled = Object.values(formData).filter(
-      (val) => val && val.trim() !== ""
+    let requiredFields = [
+      "gender",
+      "maritalStatus",
+      "profession",
+      "education",
+      "address",
+      "bio",
+      "community",
+    ];
+
+    if (formData.community !== "Caste No Bar") {
+      requiredFields.push("caste", "subCaste", "zodiacSign");
+    }
+
+    const filled = requiredFields.filter(
+      (field) => formData[field as keyof typeof formData]?.trim() !== ""
     ).length;
-    setProgress(Math.round((filled / totalFields) * 100));
+
+    setProgress(Math.round((filled / requiredFields.length) * 100));
   }, [formData]);
 
   const handleChange = (
@@ -42,7 +60,7 @@ const ProfileComponent = () => {
   return (
     <div className="container grid grid-row-4 pr-4 w-full items-center h-full overflow-hidden">
       <div className="my-auto mt-5">
-        <h2>Profile</h2>
+        <h2>Customize Your Profile</h2>
       </div>
 
       {/* Progress bar */}
@@ -60,11 +78,10 @@ const ProfileComponent = () => {
         </div>
       </div>
 
-      {/* Form Steps */}
-      <form className="flex flex-col gap-5 p-5">
+      <form className="from-container flex flex-col gap-5 p-5">
         {currentStep === 1 && (
           <>
-            <div className="mt-2">
+            <div className="gender">
               <label htmlFor="gender" className="block mb-2 text-gray-700">
                 Gender
               </label>
@@ -83,15 +100,18 @@ const ProfileComponent = () => {
               </select>
             </div>
 
-            <div className="mt-2">
-              <label htmlFor="ms" className="block mb-2 text-gray-700">
+            <div className="marital-status">
+              <label
+                htmlFor="maritalStatus"
+                className="block mb-2 text-gray-700"
+              >
                 Marital Status
               </label>
               <select
-                id="ms"
-                name="ms"
+                id="maritalStatus"
+                name="maritalStatus"
                 className="input-box w-full"
-                value={formData.ms}
+                value={formData.maritalStatus}
                 onChange={handleChange}
                 required
               >
@@ -103,7 +123,7 @@ const ProfileComponent = () => {
               </select>
             </div>
 
-            <div>
+            <div className="profession">
               <label htmlFor="profession">Profession</label>
               <input
                 name="profession"
@@ -116,7 +136,7 @@ const ProfileComponent = () => {
               />
             </div>
 
-            <div>
+            <div className="education">
               <label htmlFor="education">Education</label>
               <input
                 name="education"
@@ -128,55 +148,107 @@ const ProfileComponent = () => {
                 required
               />
             </div>
-          </>
-        )}
 
-        {currentStep === 2 && (
-          <>
-            <div>
+            <div className="address">
               <label htmlFor="address">Address</label>
               <input
                 name="address"
                 type="text"
                 className="input-box mx-auto mt-2"
                 placeholder="eg: Enter your residential address"
-                value={formData.hobby}
+                value={formData.address}
                 onChange={handleChange}
                 required
               />
             </div>
+          </>
+        )}
 
-            <div>
+        {currentStep === 2 && (
+          <>
+            <div className="bio">
               <label htmlFor="bio">Short Bio</label>
               <input
                 name="bio"
                 type="text"
                 className="input-box mx-auto mt-2"
-                placeholder="eg: I love coding..."
+                placeholder="eg: I'm xyz working in example.inc"
                 value={formData.bio}
                 onChange={handleChange}
                 required
               />
             </div>
+
+            <div className="community">
+              <label htmlFor="community" className="block mb-2 text-gray-700">
+                Community
+              </label>
+              <select
+                id="community"
+                name="community"
+                className="input-box w-full"
+                value={formData.community}
+                onChange={handleChange}
+                required
+              >
+                <option value="">Select</option>
+                <option value="Caste No Bar">Caste No Bar</option>
+                <option value="General / OC">General / OC</option>
+                <option value="BC">BC</option>
+                <option value="MBC & DNC">MBC & DNC</option>
+                <option value="SC">SC</option>
+                <option value="ST">ST</option>
+              </select>
+            </div>
+
+            {formData.community !== "Caste No Bar" && (
+              <>
+                <div className="caste">
+                  <label htmlFor="caste">Caste</label>
+                  <input
+                    name="caste"
+                    type="text"
+                    className="input-box mx-auto mt-2"
+                    placeholder="eg: Mudaliyar"
+                    value={formData.caste}
+                    onChange={handleChange}
+                    required
+                  />
+                </div>
+
+                <div className="sub-caste">
+                  <label htmlFor="subCaste">Sub Caste</label>
+                  <input
+                    name="subCaste"
+                    type="text"
+                    className="input-box mx-auto mt-2"
+                    placeholder="eg: Agamudaiyar"
+                    value={formData.subCaste}
+                    onChange={handleChange}
+                    required
+                  />
+                </div>
+
+                <div className="zodiacSign">
+                  <label htmlFor="zodiacSign">Zodiac Sign</label>
+                  <input
+                    name="zodiacSign"
+                    type="text"
+                    className="input-box mx-auto mt-2"
+                    placeholder="eg: Virgo"
+                    value={formData.zodiacSign}
+                    onChange={handleChange}
+                    required
+                  />
+                </div>
+              </>
+            )}
           </>
         )}
 
         {currentStep === 3 && (
           <>
-            <div>
-              <label htmlFor="hobby">Hobby</label>
-              <input
-                name="hobby"
-                type="text"
-                className="input-box mx-auto mt-2"
-                placeholder="eg: Painting"
-                value={formData.hobby}
-                onChange={handleChange}
-                required
-              />
-            </div>
-
-            <div>
+            {/* <div>
               <label htmlFor="bio">Short Bio</label>
               <input
                 name="bio"
@@ -187,12 +259,11 @@ const ProfileComponent = () => {
                 onChange={handleChange}
                 required
               />
-            </div>
+            </div> */}
           </>
         )}
 
-        {/* Buttons */}
-        <div className="flex flex-row justify-center gap-5 mt-4">
+        <div className="button-container flex flex-row justify-center gap-5 mt-4">
           <button
             type="button"
             onClick={prevStep}

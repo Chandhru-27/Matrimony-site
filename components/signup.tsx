@@ -1,5 +1,4 @@
 import React from "react";
-import ProfileComponent from "./profile";
 
 const SignupComponent = () => {
   return (
@@ -83,4 +82,4 @@ const SignupComponent = () => {
   );
 };
 
-export default ProfileComponent;
+export default SignupComponent;

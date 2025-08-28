@@ -1,6 +1,4 @@
 import LoginComponent from "@/components/login";
-import ProfileComponent from "@/components/signup";
-import SignupComponent from "@/components/signup";
 import React from "react";
 
 const LoginPage = () => {
@@ -20,9 +18,7 @@ const LoginPage = () => {
       {/* Signup Section */}
       <div className="w-full lg:w-[40%] flex items-center justify-center p-8">
         <div className="max-w-md w-full">
-          <SignupComponent />
-          {/* <LoginComponent/> */}
-          {/* <ProfileComponent/> */}
+          <LoginComponent/>
         </div>
       </div>
     </section>
